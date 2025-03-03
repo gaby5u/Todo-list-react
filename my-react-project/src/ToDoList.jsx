@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ToDoList() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState("");
+
+  useEffect(() => {
+    const storedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    setTasks(storedTasks);
+  }, []);
+
+  useEffect(() => {
+    if (tasks.length > 0) {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+  }, [tasks]);
 
   function handleInputChange(event) {
     setNewTask(event.target.value);
@@ -44,14 +55,17 @@ function ToDoList() {
 
   return (
     <div className="to-do-list">
-      <h1>To-Do-List</h1>
+      <h1>To Do List</h1>
 
-      <div>
+      <div className="add-task">
         <input
           type="text"
           placeholder="Enter a task..."
           value={newTask}
           onChange={handleInputChange}
+          onKeyDown={(event) => {
+            event.key === "Enter" && addTask();
+          }}
         />
         <button className="add-button" onClick={addTask}>
           Add
@@ -62,15 +76,23 @@ function ToDoList() {
         {tasks.map((task, index) => (
           <li key={index}>
             <span className="text">{task}</span>
-            <button className="delete-button" onClick={() => deleteTask(index)}>
-              Delete
-            </button>
-            <button className="move-button" onClick={() => moveTaskUp(index)}>
-              Up
-            </button>
-            <button className="move-button" onClick={() => moveTaskDown(index)}>
-              Down
-            </button>
+            <div className="buttons">
+              <button
+                className="delete-button"
+                onClick={() => deleteTask(index)}
+              >
+                Delete
+              </button>
+              <button className="move-button" onClick={() => moveTaskUp(index)}>
+                Up
+              </button>
+              <button
+                className="move-button"
+                onClick={() => moveTaskDown(index)}
+              >
+                Down
+              </button>
+            </div>
           </li>
         ))}
       </ol>

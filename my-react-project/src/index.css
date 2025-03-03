@@ -2,6 +2,13 @@ body {
   background-color: hsl(0, 0%, 10%);
 }
 
+.add-task {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 20px;
+}
+
 .to-do-list {
   font-family: Arial, sans-serif;
   text-align: center;
@@ -11,6 +18,14 @@ body {
 h1 {
   font-size: 4rem;
   color: #fff;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 button {
@@ -48,6 +63,11 @@ button {
   background-color: hsl(207, 90%, 54%);
 }
 
+input[type="text"]:focus {
+  outline: none;
+  border: 2px solid hsl(0, 0%, 39%);
+}
+
 input[type="text"] {
   font-size: 1.6rem;
   padding: 10px;
@@ -70,10 +90,12 @@ li {
   border-radius: 5px;
   display: flex;
   align-items: center;
+  margin: 10px 10%;
 }
 
 .text {
   flex: 1;
+  word-break: break-word;
 }
 
 .delete-button,
@@ -81,4 +103,26 @@ li {
   padding: 8px 12px;
   font-size: 1.4rem;
   margin-left: 10px;
+}
+
+@media screen and (max-width: 640px) {
+  :root {
+    font-size: 12px;
+  }
+  .buttons {
+    flex-direction: column;
+  }
+  .buttons button {
+    width: 100%;
+  }
+  .add-task {
+    flex-direction: column;
+    margin: 10px 10%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  :root {
+    font-size: 16px;
+  }
 }
